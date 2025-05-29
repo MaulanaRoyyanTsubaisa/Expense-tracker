@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Pengeluaran</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #f0f4f8;
+      }
+      .container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto max-w-4xl">
+      <h2 class="text-2xl font-bold mb-6 text-center">Dashboard Pengeluaran</h2>
+
+      <!-- Form Tambah Pengeluaran -->
+      <div class="mb-8 p-6 border rounded-md bg-gray-50">
+        <h3 class="text-xl font-semibold mb-4">Tambah Pengeluaran Baru</h3>
+        <form id="addExpenseForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label for="date" class="block text-gray-700 text-sm font-bold mb-2"
+              >Tanggal:</label
+            >
+            <input
+              type="date"
+              id="date"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="description"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Deskripsi:</label
+            >
+            <input
+              type="text"
+              id="description"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="amount"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Jumlah:</label
+            >
+            <input
+              type="number"
+              id="amount"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              step="0.01"
+              required
+            />
+          </div>
+          <div class="md:col-span-3">
+            <div
+              id="addExpenseError"
+              class="text-red-500 text-sm mb-4 hidden"
+            ></div>
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            >
+              Tambah Pengeluaran
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Daftar Pengeluaran -->
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Daftar Pengeluaran</h3>
+        <div class="mb-4 text-lg font-bold">
+          Total Pengeluaran: <span id="totalExpenses">Rp 0</span>
+        </div>
+        <div
+          id="expensesListError"
+          class="text-red-500 text-sm mb-4 hidden"
+        ></div>
+        <table class="min-w-full bg-white border rounded-md">
+          <thead>
+            <tr>
+              <th class="py-2 px-4 border-b text-left">Tanggal</th>
+              <th class="py-2 px-4 border-b text-left">Deskripsi</th>
+              <th class="py-2 px-4 border-b text-right">Jumlah</th>
+              <th class="py-2 px-4 border-b text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="expensesTableBody">
+            <!-- Daftar pengeluaran akan dimuat di sini oleh JavaScript -->
+            <tr>
+              <td colspan="4" class="text-center py-4">
+                Memuat pengeluaran...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tombol Logout -->
+      <div class="mt-6 text-center">
+        <div id="logoutError" class="text-red-500 text-sm mb-4 hidden"></div>
+        <button
+          id="logoutButton"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/router.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+  </body>
+</html>
