@@ -1,6 +1,5 @@
 import { register } from "./api.js";
 import { redirectTo } from "./router.js";
-import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
@@ -14,20 +13,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await register(email, password);
-
-      // Tampilkan notifikasi sukses
       await Swal.fire({
-        title: "Berhasil!",
-        text: "Akun berhasil dibuat. Silakan login.",
         icon: "success",
-        confirmButtonText: "OK",
+        title: "Selamat!",
+        text: "Akun berhasil dibuat, mengarahkan ke halaman login...",
+        showConfirmButton: false,
+        timer: 2000,
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        backdrop: `
+          rgba(0,0,0,0.4)
+          url("/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
       });
-
       redirectTo("/login");
     } catch (error) {
       registerError.textContent =
         error.message || "Registrasi gagal. Silakan coba lagi.";
       registerError.classList.remove("hidden");
+      await Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Registrasi gagal. Silakan coba lagi.",
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        confirmButtonColor: "#3085d6",
+      });
     }
   });
 });

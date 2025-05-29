@@ -3,11 +3,21 @@
 import { getExpenses, addExpense, deleteExpense } from "./api.js";
 import { isAuthenticated, removeToken } from "./auth.js";
 import { redirectTo } from "./router.js";
-import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Check authentication
   if (!isAuthenticated()) {
+    await Swal.fire({
+      icon: "warning",
+      title: "Akses Ditolak",
+      text: "Silakan login terlebih dahulu",
+      showConfirmButton: false,
+      timer: 2000,
+      customClass: {
+        popup: "animated fadeInDown",
+      },
+      background: "#fff",
+    });
     redirectTo("/login");
     return;
   }
@@ -70,6 +80,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       expensesListError.textContent =
         error.message || "Gagal memuat daftar pengeluaran.";
       expensesListError.classList.remove("hidden");
+      await Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Gagal memuat daftar pengeluaran.",
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        confirmButtonColor: "#3085d6",
+      });
     }
   };
 
@@ -85,21 +105,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       await addExpense(date, description, amount);
       addExpenseForm.reset();
       addExpenseError.classList.add("hidden");
-
-      // Tampilkan notifikasi sukses
       await Swal.fire({
-        title: "Berhasil!",
-        text: "Pengeluaran berhasil ditambahkan.",
         icon: "success",
-        timer: 1500,
+        title: "Berhasil!",
+        text: "Data pengeluaran berhasil ditambahkan",
         showConfirmButton: false,
+        timer: 2000,
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        backdrop: `
+          rgba(0,0,0,0.4)
+          url("/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
       });
-
       await loadExpenses();
     } catch (error) {
       addExpenseError.textContent =
         error.message || "Gagal menambahkan pengeluaran.";
       addExpenseError.classList.remove("hidden");
+      await Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Gagal menambahkan pengeluaran.",
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        confirmButtonColor: "#3085d6",
+      });
     }
   });
 
@@ -108,36 +145,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (e.target.classList.contains("delete-expense")) {
       const id = e.target.dataset.id;
 
-      // Konfirmasi penghapusan dengan SweetAlert2
       const result = await Swal.fire({
-        title: "Apakah Anda yakin?",
-        text: "Pengeluaran ini akan dihapus permanen!",
+        title: "Hapus Data?",
+        text: "Data yang dihapus tidak dapat dikembalikan!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Ya, hapus!",
         cancelButtonText: "Batal",
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
       });
 
       if (result.isConfirmed) {
         try {
           await deleteExpense(id);
-
-          // Tampilkan notifikasi sukses
           await Swal.fire({
-            title: "Terhapus!",
-            text: "Pengeluaran berhasil dihapus.",
             icon: "success",
-            timer: 1500,
+            title: "Terhapus!",
+            text: "Data pengeluaran berhasil dihapus",
             showConfirmButton: false,
+            timer: 2000,
+            customClass: {
+              popup: "animated fadeInDown",
+            },
+            background: "#fff",
+            backdrop: `
+              rgba(0,0,0,0.4)
+              url("/images/nyan-cat.gif")
+              left top
+              no-repeat
+            `,
           });
-
           await loadExpenses();
         } catch (error) {
           expensesListError.textContent =
             error.message || "Gagal menghapus pengeluaran.";
           expensesListError.classList.remove("hidden");
+          await Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.message || "Gagal menghapus pengeluaran.",
+            customClass: {
+              popup: "animated fadeInDown",
+            },
+            background: "#fff",
+            confirmButtonColor: "#3085d6",
+          });
         }
       }
     }
@@ -145,22 +202,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Logout
   logoutButton.addEventListener("click", async () => {
-    try {
-      removeToken();
+    const result = await Swal.fire({
+      title: "Keluar dari Sistem?",
+      text: "Anda akan keluar dari sistem!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Ya, keluar!",
+      cancelButtonText: "Batal",
+      customClass: {
+        popup: "animated fadeInDown",
+      },
+      background: "#fff",
+    });
 
-      // Tampilkan notifikasi sukses
-      await Swal.fire({
-        title: "Berhasil!",
-        text: "Anda telah berhasil logout.",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-
-      redirectTo("/login");
-    } catch (error) {
-      logoutError.textContent = error.message || "Gagal logout.";
-      logoutError.classList.remove("hidden");
+    if (result.isConfirmed) {
+      try {
+        removeToken();
+        await Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: "Anda telah keluar dari sistem",
+          showConfirmButton: false,
+          timer: 2000,
+          customClass: {
+            popup: "animated fadeInDown",
+          },
+          background: "#fff",
+          backdrop: `
+            rgba(0,0,0,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+        });
+        redirectTo("/login");
+      } catch (error) {
+        logoutError.textContent = error.message || "Gagal logout.";
+        logoutError.classList.remove("hidden");
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message || "Gagal logout.",
+          customClass: {
+            popup: "animated fadeInDown",
+          },
+          background: "#fff",
+          confirmButtonColor: "#3085d6",
+        });
+      }
     }
   });
 

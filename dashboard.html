@@ -6,6 +6,8 @@
     <title>Dashboard Pengeluaran</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       body {
         background-color: #f0f4f8;
@@ -17,6 +19,23 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         margin-top: 2rem;
         margin-bottom: 2rem;
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translate3d(0, -20px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+      .animated {
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+      }
+      .fadeInDown {
+        animation-name: fadeInDown;
       }
     </style>
   </head>

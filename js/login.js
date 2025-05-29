@@ -3,7 +3,6 @@
 import { login } from "./api.js";
 import { saveToken } from "./auth.js";
 import { redirectTo } from "./router.js";
-import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
@@ -18,21 +17,38 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await login(email, password);
       saveToken(response.token);
-
-      // Tampilkan notifikasi sukses
       await Swal.fire({
-        title: "Berhasil!",
-        text: "Login berhasil. Mengalihkan ke dashboard...",
         icon: "success",
-        timer: 1500,
+        title: "Selamat Datang!",
+        text: "Login berhasil, mengarahkan ke dashboard...",
         showConfirmButton: false,
+        timer: 2000,
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        backdrop: `
+          rgba(0,0,0,0.4)
+          url("/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
       });
-
       redirectTo("/dashboard");
     } catch (error) {
       loginError.textContent =
         error.message || "Login gagal. Silakan coba lagi.";
       loginError.classList.remove("hidden");
+      await Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Login gagal. Silakan coba lagi.",
+        customClass: {
+          popup: "animated fadeInDown",
+        },
+        background: "#fff",
+        confirmButtonColor: "#3085d6",
+      });
     }
   });
 });
