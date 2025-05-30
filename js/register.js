@@ -23,27 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
           popup: "animated fadeInDown",
         },
         background: "#fff",
-        backdrop: `
-          rgba(0,0,0,0.4)
-          url("/images/nyan-cat.gif")
-          left top
-          no-repeat
-        `,
       });
       redirectTo("/login");
     } catch (error) {
       registerError.textContent =
         error.message || "Registrasi gagal. Silakan coba lagi.";
       registerError.classList.remove("hidden");
+
+      console.error("Error saat register:", error); // Debug log
+
       await Swal.fire({
         icon: "error",
         title: "Oops...",
         text: error.message || "Registrasi gagal. Silakan coba lagi.",
-        customClass: {
-          popup: "animated fadeInDown",
-        },
         background: "#fff",
         confirmButtonColor: "#3085d6",
+        focusConfirm: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        preConfirm: () => Promise.resolve(),
       });
     }
   });

@@ -110,26 +110,27 @@
           id="expensesListError"
           class="text-red-500 text-sm mb-4 hidden"
         ></div>
-        <table class="min-w-full bg-white border rounded-md">
-          <thead>
-            <tr>
-              <th class="py-2 px-4 border-b text-left">Tanggal</th>
-              <th class="py-2 px-4 border-b text-left">Deskripsi</th>
-              <th class="py-2 px-4 border-b text-right">Jumlah</th>
-              <th class="py-2 px-4 border-b text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="expensesTableBody">
-            <!-- Daftar pengeluaran akan dimuat di sini oleh JavaScript -->
-            <tr>
-              <td colspan="4" class="text-center py-4">
-                Memuat pengeluaran...
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white border rounded-md">
+            <thead>
+              <tr>
+                <th class="py-2 px-4 border-b text-left">Tanggal</th>
+                <th class="py-2 px-4 border-b text-left">Deskripsi</th>
+                <th class="py-2 px-4 border-b text-right">Jumlah</th>
+                <th class="py-2 px-4 border-b text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="expensesTableBody">
+              <!-- Daftar pengeluaran akan dimuat di sini oleh JavaScript -->
+              <tr>
+                <td colspan="4" class="text-center py-4">
+                  Memuat pengeluaran...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-
       <!-- Tombol Logout -->
       <div class="mt-6 text-center">
         <div id="logoutError" class="text-red-500 text-sm mb-4 hidden"></div>

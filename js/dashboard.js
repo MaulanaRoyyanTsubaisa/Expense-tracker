@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       text: "Silakan login terlebih dahulu",
       showConfirmButton: false,
       timer: 2000,
-      customClass: {
-        popup: "animated fadeInDown",
-      },
       background: "#fff",
     });
     redirectTo("/login");
@@ -84,9 +81,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         icon: "error",
         title: "Oops...",
         text: error.message || "Gagal memuat daftar pengeluaran.",
-        customClass: {
-          popup: "animated fadeInDown",
-        },
         background: "#fff",
         confirmButtonColor: "#3085d6",
       });
@@ -106,22 +100,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       addExpenseForm.reset();
       addExpenseError.classList.add("hidden");
       await Swal.fire({
+        toast: true,
+        position: "top-end",
         icon: "success",
-        title: "Berhasil!",
-        text: "Data pengeluaran berhasil ditambahkan",
+        title: "Data pengeluaran berhasil ditambahkan",
         showConfirmButton: false,
         timer: 2000,
-        customClass: {
-          popup: "animated fadeInDown",
-        },
-        background: "#fff",
-        backdrop: `
-          rgba(0,0,0,0.4)
-          url("/images/nyan-cat.gif")
-          left top
-          no-repeat
-        `,
+        timerProgressBar: true,
       });
+
       await loadExpenses();
     } catch (error) {
       addExpenseError.textContent =
@@ -131,9 +118,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         icon: "error",
         title: "Oops...",
         text: error.message || "Gagal menambahkan pengeluaran.",
-        customClass: {
-          popup: "animated fadeInDown",
-        },
         background: "#fff",
         confirmButtonColor: "#3085d6",
       });
@@ -154,9 +138,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Ya, hapus!",
         cancelButtonText: "Batal",
-        customClass: {
-          popup: "animated fadeInDown",
-        },
         background: "#fff",
       });
 
@@ -164,22 +145,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
           await deleteExpense(id);
           await Swal.fire({
+            toast: true,
+            position: "top-end",
             icon: "success",
-            title: "Terhapus!",
-            text: "Data pengeluaran berhasil dihapus",
+            title: "Data pengeluaran berhasil dihapus",
             showConfirmButton: false,
             timer: 2000,
-            customClass: {
-              popup: "animated fadeInDown",
-            },
-            background: "#fff",
-            backdrop: `
-              rgba(0,0,0,0.4)
-              url("/images/nyan-cat.gif")
-              left top
-              no-repeat
-            `,
+            timerProgressBar: true,
           });
+
           await loadExpenses();
         } catch (error) {
           expensesListError.textContent =
@@ -189,9 +163,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             icon: "error",
             title: "Oops...",
             text: error.message || "Gagal menghapus pengeluaran.",
-            customClass: {
-              popup: "animated fadeInDown",
-            },
             background: "#fff",
             confirmButtonColor: "#3085d6",
           });
@@ -211,9 +182,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Ya, keluar!",
       cancelButtonText: "Batal",
-      customClass: {
-        popup: "animated fadeInDown",
-      },
       background: "#fff",
     });
 
@@ -226,16 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           text: "Anda telah keluar dari sistem",
           showConfirmButton: false,
           timer: 2000,
-          customClass: {
-            popup: "animated fadeInDown",
-          },
           background: "#fff",
-          backdrop: `
-            rgba(0,0,0,0.4)
-            url("/images/nyan-cat.gif")
-            left top
-            no-repeat
-          `,
         });
         redirectTo("/login");
       } catch (error) {
@@ -245,9 +204,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           icon: "error",
           title: "Oops...",
           text: error.message || "Gagal logout.",
-          customClass: {
-            popup: "animated fadeInDown",
-          },
           background: "#fff",
           confirmButtonColor: "#3085d6",
         });
