@@ -101,6 +101,10 @@ app.post("/login", async (req, res) => {
 });
 
 // Protected routes
+app.get("/api/user", authenticateToken, (req, res) => {
+  res.json({ email: req.user.email });
+});
+
 app.get("/api/expenses", authenticateToken, (req, res) => {
   const userExpenses = expenses.filter(
     (expense) => expense.userId === req.user.id

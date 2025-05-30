@@ -40,106 +40,128 @@
     </style>
   </head>
   <body>
-    <div class="container mx-auto max-w-4xl">
-      <h2 class="text-2xl font-bold mb-6 text-center">Dashboard Pengeluaran</h2>
+    <div class="container mx-auto max-w-7xl">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-8 pb-4 border-b">
+        <h1 class="text-2xl font-bold text-blue-600">$ Expense Tracker</h1>
+        <div class="flex items-center">
+          <span class="mr-2 text-gray-700" id="userEmail">Halo, </span>
+          <button
+            id="logoutButton"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
 
-      <!-- Form Tambah Pengeluaran -->
-      <div class="mb-8 p-6 border rounded-md bg-gray-50">
-        <h3 class="text-xl font-semibold mb-4">Tambah Pengeluaran Baru</h3>
-        <form id="addExpenseForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label for="date" class="block text-gray-700 text-sm font-bold mb-2"
-              >Tanggal:</label
-            >
-            <input
-              type="date"
-              id="date"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
-          </div>
-          <div>
-            <label
-              for="description"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Deskripsi:</label
-            >
-            <input
-              type="text"
-              id="description"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
-          </div>
-          <div>
-            <label
-              for="amount"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Jumlah:</label
-            >
-            <input
-              type="number"
-              id="amount"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              step="0.01"
-              required
-            />
-          </div>
-          <div class="md:col-span-3">
+      <!-- Main Content: Add Expense and Expense List -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Form Tambah Pengeluaran -->
+        <div class="p-6 border rounded-md bg-gray-50">
+          <h3 class="text-xl font-semibold mb-4">+ Tambah Pengeluaran</h3>
+          <p class="text-gray-600 mb-6">Catat pengeluaran baru Anda</p>
+          <form id="addExpenseForm" class="grid grid-cols-1 gap-4">
+            <div>
+              <label
+                for="date"
+                class="block text-gray-700 text-sm font-bold mb-2"
+                >📅 Tanggal:</label
+              >
+              <input
+                type="date"
+                id="date"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="description"
+                class="block text-gray-700 text-sm font-bold mb-2"
+                >📄 Deskripsi:</label
+              >
+              <input
+                type="text"
+                id="description"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Contoh: Makan siang di restoran"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="amount"
+                class="block text-gray-700 text-sm font-bold mb-2"
+                >$ Jumlah (IDR):</label
+              >
+              <input
+                type="number"
+                id="amount"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                step="0.01"
+                placeholder="50000"
+                required
+              />
+            </div>
+            <div>
+              <div
+                id="addExpenseError"
+                class="text-red-500 text-sm mb-4 hidden"
+              ></div>
+              <button
+                type="submit"
+                class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              >
+                + Tambah Pengeluaran
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Daftar Pengeluaran -->
+        <div>
+          <div class="mb-4 p-6 border rounded-md bg-white">
+            <h3 class="text-xl font-semibold mb-2">Daftar Pengeluaran</h3>
+            <p class="text-gray-600 mb-4">Riwayat pengeluaran Anda</p>
+            <div class="mb-4 text-lg font-bold text-right">
+              Total Pengeluaran:
+              <span id="totalExpenses" class="text-red-600">Rp 0</span>
+            </div>
             <div
-              id="addExpenseError"
+              id="expensesListError"
               class="text-red-500 text-sm mb-4 hidden"
             ></div>
-            <button
-              type="submit"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            >
-              Tambah Pengeluaran
-            </button>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white">
+                <thead>
+                  <tr>
+                    <th class="py-2 px-4 border-b text-left text-gray-600">
+                      Tanggal
+                    </th>
+                    <th class="py-2 px-4 border-b text-left text-gray-600">
+                      Deskripsi
+                    </th>
+                    <th class="py-2 px-4 border-b text-right text-gray-600">
+                      Jumlah
+                    </th>
+                    <th class="py-2 px-4 border-b text-center text-gray-600">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTableBody">
+                  <!-- Daftar pengeluaran akan dimuat di sini oleh JavaScript -->
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-gray-500">
+                      Memuat pengeluaran...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </form>
-      </div>
-
-      <!-- Daftar Pengeluaran -->
-      <div>
-        <h3 class="text-xl font-semibold mb-4">Daftar Pengeluaran</h3>
-        <div class="mb-4 text-lg font-bold">
-          Total Pengeluaran: <span id="totalExpenses">Rp 0</span>
         </div>
-        <div
-          id="expensesListError"
-          class="text-red-500 text-sm mb-4 hidden"
-        ></div>
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white border rounded-md">
-            <thead>
-              <tr>
-                <th class="py-2 px-4 border-b text-left">Tanggal</th>
-                <th class="py-2 px-4 border-b text-left">Deskripsi</th>
-                <th class="py-2 px-4 border-b text-right">Jumlah</th>
-                <th class="py-2 px-4 border-b text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="expensesTableBody">
-              <!-- Daftar pengeluaran akan dimuat di sini oleh JavaScript -->
-              <tr>
-                <td colspan="4" class="text-center py-4">
-                  Memuat pengeluaran...
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- Tombol Logout -->
-      <div class="mt-6 text-center">
-        <div id="logoutError" class="text-red-500 text-sm mb-4 hidden"></div>
-        <button
-          id="logoutButton"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Logout
-        </button>
       </div>
     </div>
 

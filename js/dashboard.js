@@ -1,6 +1,6 @@
 // js/dashboard.js
 
-import { getExpenses, addExpense, deleteExpense } from "./api.js";
+import { getExpenses, addExpense, deleteExpense, getUser } from "./api.js";
 import { isAuthenticated, removeToken } from "./auth.js";
 import { redirectTo } from "./router.js";
 
@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const addExpenseError = document.getElementById("addExpenseError");
   const expensesListError = document.getElementById("expensesListError");
   const logoutError = document.getElementById("logoutError");
+  const userEmailSpan = document.getElementById("userEmail");
 
   // Format currency
   const formatCurrency = (amount) => {
@@ -213,4 +214,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initial load
   await loadExpenses();
+
+  // Load user email
+  try {
+    const user = await getUser();
+    userEmailSpan.textContent = `Halo, ${user.email}`;
+  } catch (error) {
+    console.error("Error fetching user email:", error);
+    userEmailSpan.textContent = "Halo, Pengguna"; // Fallback text
+  }
 });

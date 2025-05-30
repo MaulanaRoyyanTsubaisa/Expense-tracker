@@ -72,3 +72,7 @@ export const addExpense = async (date, description, amount) => {
 export const deleteExpense = async (id) => {
   return request(`/api/expenses/${id}`, "DELETE", null, true);
 };
+
+export const getUser = async () => {
+  return request("/api/user", "GET", null, true);
+};
