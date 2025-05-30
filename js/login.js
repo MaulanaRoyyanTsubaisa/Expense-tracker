@@ -27,12 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
           popup: "animated fadeInDown",
         },
         background: "#fff",
-        backdrop: `
-          rgba(0,0,0,0.4)
-          url("/images/nyan-cat.gif")
-          left top
-          no-repeat
-        `,
       });
       redirectTo("/dashboard");
     } catch (error) {
@@ -48,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         background: "#fff",
         confirmButtonColor: "#3085d6",
+        focusConfirm: true, // <-- Ini penting!
       });
     }
   });
